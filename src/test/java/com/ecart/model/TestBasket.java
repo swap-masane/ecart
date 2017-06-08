@@ -138,16 +138,25 @@ public class TestBasket {
 	@Test
 	public void testGenerateBillForMultipleBasket() throws Exception {
 		item = new Item();
-		item.setType(ItemType.ORANGE);
-		item.setDescription("Its an orange");
+		item.setType(ItemType.LEMON);
+		item.setDescription("Its an Lemon");
 		item.setItemId(1);
 		// initialize list
 		List<Item> itemList = new ArrayList<>();
 		itemList.add(item);
+		
+		item = new Item();
+		item.setType(ItemType.LEMON);
+		item.setDescription("Its an Lemon");
+		item.setItemId(2);
+		itemList.add(item);
+		
 		// initialize map
-		itemMap.put(ItemType.ORANGE, itemList);
+		itemMap.clear();
+		itemMap.put(ItemType.LEMON, itemList);
+		
 		basket.setItemMap(itemMap);
-		assertTrue(basket.generateBill() == 35.0);
+		assertTrue(basket.generateBill() == 10.0);
 
 	}
 	

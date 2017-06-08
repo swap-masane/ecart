@@ -17,8 +17,8 @@ public class TestItem {
 
 	@Test
 	public void testParameterisedItemWIthNull() {
-		item = new Item(ItemType.BANANA, null, null);
-		assertTrue(10.0 == item.getType().getDiscountedPrice());
+		item = new Item(ItemType.LEMON, null, null);
+		assertTrue(5.0 == item.getType().getDiscountedPrice());
 	}
 
 	@Test
