@@ -67,7 +67,7 @@ public class TestBasketService {
 		basket = new Basket();
 		assertEquals(true, basketserice.isBasketEmpty(basket));
 	}
-	
+
 	@Test
 	public void testIsBasketEmptAfterAddAndRemove() {
 		basket = new Basket();
@@ -104,9 +104,9 @@ public class TestBasketService {
 		assertTrue(85.0 == basketserice.calculateBaketCost());
 
 	}
-	
+
 	@Test
-	public void testClearBasket(){
+	public void testClearBasket() {
 		Basket basket = new Basket();
 		BasketService basketserice = new BasketServiceImpl(basket);
 		fillBasket(basketserice);
@@ -114,19 +114,17 @@ public class TestBasketService {
 		basketserice.clearBasket();
 		assertEquals(basket.getItemList().size(), 0);
 	}
-	
 
 	@Test
-	public void testClearBasketWithNullBasket(){
+	public void testClearBasketWithNullBasket() {
 		Basket basket = null;
 		BasketService basketserice = new BasketServiceImpl(basket);
-		try{
-		basketserice.clearBasket();
-		}catch (Exception e) {
+		try {
+			basketserice.clearBasket();
+		} catch (Exception e) {
 			Assert.fail("Exception occured while clearing empty basket ");
 		}
 	}
-	
 
 	private void fillBasket(BasketService service) {
 		Item item = new Item();

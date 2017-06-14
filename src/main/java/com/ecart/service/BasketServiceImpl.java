@@ -63,13 +63,12 @@ public class BasketServiceImpl implements BasketService {
 	@Override
 	public double calculateBaketCost() {
 
-
 		if (isBasketEmpty(basket)) {
 			return 0.0;
 		}
-		
+
 		List<Item> itemList = basket.getItemList();
-		
+
 		// using lambada expression to find aggregated value of bill
 		double basketCost = itemList.parallelStream().map(e -> e.getType().getDiscountedPrice()).reduce(0.0,
 				(x, y) -> x + y);
@@ -77,25 +76,30 @@ public class BasketServiceImpl implements BasketService {
 		return basketCost;
 	}
 
+	
+	
 	@Override
 	public void printItemizedBill() {
-		
-		if(isBasketEmpty(basket)){
+
+		if (isBasketEmpty(basket)) {
 			// do nothing, just log the event
 			return;
 		}
-		
+
 		List<Item> itemList = basket.getItemList();
 
-		// creating itemized map
-		Map<ItemType, List<Item>> itemMap = itemList.stream().collect(Collectors.groupingBy(Item::getType));
 		String line = "---------------------------------------------------";
 		System.out.println(line);
 		System.out.println("Sr\tItem\tUnitPrice\tQty\tTotalCost");
 		System.out.println(line);
+		
 		int serialNumber = 0;
 		double itemizedSum;
 		double totalBill = 0.0;
+		
+		// creating itemized map
+		Map<ItemType, List<Item>> itemMap = itemList.stream().collect(Collectors.groupingBy(Item::getType));
+
 		for (Map.Entry<ItemType, List<Item>> entry : itemMap.entrySet()) {
 			serialNumber++;
 			// Using parallel stream for faster processing, mapping it to price

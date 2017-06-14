@@ -40,5 +40,12 @@ public interface CustomerService {
 	 * @return
 	 */
 	public boolean removeFromBasket(Item item);
+	
+	
+	/**
+	 * Gets final customer bill after applying discounts 
+	 * @return
+	 */
+	public double getCustomerBillAfterDiscounts(); 
 
 }

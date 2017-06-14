@@ -27,10 +27,22 @@ public class CustomerServiceImpl implements CustomerService {
 		// If we need checkout to be part of some other interface,
 		// we can have billing service and handle other methods like payment
 		// mode, but keeping it out of scope for this assignment
-		double basketBill = basketService.calculateBaketCost();
-		double finalBill = basketBill - (basketBill * (customer.getAccountTYpe().getDiscount() / 100));
+
+		double totalBill = getCustomerBillAfterDiscounts();
 		basketService.printItemizedBill();
-		payAndEmptyBasker(finalBill);
+		// prints discounted bill.
+		//  System.out.println("Final bill after discount :" + totalBill);
+		payAndEmptyBasker(totalBill);
+	}
+
+	
+	/**
+	 * Applies Customer discount and returns the final bill
+	 * @return
+	 */
+	public double getCustomerBillAfterDiscounts() {
+		double basketBill = basketService.calculateBaketCost();
+		return basketBill - (basketBill * (customer.getAccountTYpe().getDiscount() / 100));
 	}
 
 	/**
@@ -42,7 +54,7 @@ public class CustomerServiceImpl implements CustomerService {
 		// billingService.pay(finalBill);
 		// reset basket
 		basketService.clearBasket();
-		
+
 	}
 
 	@Override
