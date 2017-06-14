@@ -153,13 +153,7 @@ public class TestBasketService {
 	}
 
 	@Test
-	public void testPrintItemizedBill1() {
-		// Basket basket = new Basket();
-		// BasketService basketserice = new BasketServiceImpl(basket);
-		// BasketService basketsericeSpy = Mockito.spy(basketserice);
-		// basketsericeSpy.printItemizedBill();
-		// basketsericeSpy.printItemizedBill();
-		// verify(basketsericeSpy, times(2)).printItemizedBill();
+	public void testPrivatePrintMethod() {
 		Basket basket = new Basket();
 		BasketService basketserice = new BasketServiceImpl(basket);
 		String formatString = null;

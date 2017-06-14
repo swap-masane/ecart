@@ -2,9 +2,13 @@ package com.ecart.service;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
+import static org.mockito.Mockito.mock;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.mockito.InjectMocks;
+import org.powermock.reflect.Whitebox;
 
 import com.ecart.constant.AccountType;
 import com.ecart.constant.ItemType;
@@ -17,6 +21,14 @@ public class TestCustomerServiceImpl {
 	private CustomerService service;
 	private Customer customer;
 	private Item item;
+	
+	@InjectMocks
+	 BasketService mockBasket;
+	
+	@InjectMocks
+	BasketService mockBasketService = mock(BasketService.class);
+	@InjectMocks
+	CustomerServiceImpl mockService;
 
 	@Before
 	public void initialize() {
@@ -68,6 +80,22 @@ public class TestCustomerServiceImpl {
 		service.addToBasket(item);
 		assertTrue(36.0 == service.getCustomerBillAfterDiscounts());
 	}
-
 	
+	
+	@Test
+	public void testPayAndEmptyBasker(){
+		CustomerServiceImpl customerService = new CustomerServiceImpl(customer); 
+		customerService.addToBasket(item);
+
+		assertTrue(customerService.getCustomerBillAfterDiscounts() == 18.0);
+		
+		try {
+			 Whitebox.invokeMethod(customerService, "payAndEmptyBasker", (double)20);
+		} catch (Exception e) {
+			fail("Change is signature of methods, method innocation failed");
+		}
+		
+		assertTrue(customerService.getCustomerBillAfterDiscounts() == 0.0);
+	}
+
 }
