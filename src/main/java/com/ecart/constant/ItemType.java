@@ -27,12 +27,4 @@ public enum ItemType {
 		this.price = price;
 	}
 
-	public void overrideDiscount(double discount) {
-		this.discount = discount;
-	}
-
-	public void overridePrice(double price) {
-		this.price = price;
-	}
-
 }

@@ -13,12 +13,12 @@ public class Customer {
 	private Basket basket;
 	private AccountType accountTYpe;
 
-	// Default Acount type is Non_member, unless explicitely specified
+	// Default Account type is Non_member, unless explicitely specified
 	public Customer() {
 		this.accountTYpe = AccountType.NON_MEMBER;
 	}
 
-	// Default Acount type is Non_member, unless explicitely specified
+	// Default Account type is Non_member, unless explicitely specified
 	public Customer(AccountType accountTYpe) {
 		this.accountTYpe = accountTYpe;
 	}

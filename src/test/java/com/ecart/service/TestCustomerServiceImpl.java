@@ -1,5 +1,6 @@
 package com.ecart.service;
 
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 import org.junit.Before;
@@ -12,72 +13,51 @@ import com.ecart.model.Customer;
 import com.ecart.model.Item;
 
 public class TestCustomerServiceImpl {
-	CustomerService service;
-	Customer customer ;
 	
+	private CustomerService service ;
+	private Customer customer;
+	private Item item;
 	@Before
 	public void initialize(){
-		service = new CustomerServiceImpl();
+		
 		customer = new Customer();
-		// parameterized item just to makes sure price is overriden, so that expected results wont change 
-		Item item = new Item(ItemType.APPLE, 20.0,0.0);
-		item.setItemId(1);
-		item.setType(ItemType.APPLE);
-		item.setDescription("Its an Apple");
-		
-		Basket basket = new Basket();
-		basket.addItem(item);
-		customer.setBasket(basket);
-		
-	}
-	
-	@Test(expected=Exception.class)
-	public void testCheckOutWithNulCustl() throws Exception{
-		service.checkOut(null);
-	}
-	
-	@Test(expected=Exception.class)
-	public void testCheckOutWithNullBasket() throws Exception{
-		// set basket to null
-		customer.setBasket(null);
-		service.checkOut(customer);
-	}
-	
-	@Test
-	public void testCheckOutWithGeneralCustomer() throws Exception{
-		assertTrue(20.0== service.checkOut(customer));
-	}
-	
-	@Test
-	public void testCheckOutWithGoldCustomer() throws Exception{
-		customer = new Customer();
-		Item item = new Item();
-		item.setItemId(1);
-		item.setType(ItemType.APPLE);
-		item.setDescription("Its an Apple");
-		
-		Basket basket = new Basket();
-		basket.addItem(item);
-		customer.setBasket(basket);
+		customer.setFirstName("John");
+		customer.setLastName("Doe");
 		customer.setAccountTYpe(AccountType.GOLD_MEMBER);
-		assertTrue(18.0== service.checkOut(customer));
+		customer.setBasket(new Basket());
+		service = new CustomerServiceImpl(customer);
+		
+		item = new Item();
+		item.setDescription("Apple");
+		item.setItemId(1);
+		item.setType(ItemType.APPLE);
+		
 	}
 	
 	@Test
-	public void testCheckOutWithSilverCustomer() throws Exception{
-		customer = new Customer();
-		Item item = new Item();
-		item.setItemId(1);
-		item.setType(ItemType.APPLE);
-		item.setDescription("Its an Apple");
-		
-		Basket basket = new Basket();
-		basket.addItem(item);
-		customer.setBasket(basket);
-		customer.setAccountTYpe(AccountType.SILVER_MEMBER);
-		
-		assertTrue(19.0== service.checkOut(customer));
+	public void TestAddToBasket(){
+		assertTrue(service.addToBasket(item));
 	}
 	
-
+	@Test
+	public void TestAddToBasketWithNull(){
+		assertFalse(service.addToBasket(null));
+	}
+	
+	@Test
+	public void testRemoveBasket(){
+		service.addToBasket(item);
+		assertTrue(service.removeFromBasket(item));
+	}
+	
+	@Test
+	public void testRemoveBasketWithNull(){
+		assertFalse(service.addToBasket(null));
+	}
+	
+//	@Test
+//	public void testClearBasket(){
+//		assertFalse(service.clearBasket());
+//	}
+	
 }

@@ -1,29 +1,63 @@
 package com.ecart.service;
 
-import com.ecart.exception.RbcException;
 import com.ecart.model.Customer;
+import com.ecart.model.Item;
 
 public class CustomerServiceImpl implements CustomerService {
 
+	// injecting basket
+	private BasketService basketService;
+
+	// injecting customer
+	private Customer customer;
+
+	// parameterized constructor to initialize service
+	public CustomerServiceImpl(Customer customer) {
+		this.customer = customer;
+		basketService = new BasketServiceImpl(customer.getBasket());
+	}
+
 	/*
+	 * 
 	 * (non-Javadoc)
 	 * 
 	 * @see com.ecart.service.CustomerService#checkOut(com.ecart.model.Customer)
 	 */
-	public double checkOut(Customer customer) throws RbcException {
-
-		if (customer == null || customer.getBasket() == null) {
-			throw new RbcException("EMPTHY_BASKET_EXCEPTION", new Exception("Basket is empty, Nothing to checkout."));
-		}
-
-		double basketBill = customer.getBasket().generateBill();
-
+	public void checkOut() {
+		// If we need checkout to be part of some other interface,
+		// we can have billing service and handle other methods like payment
+		// mode, but keeping it out of scope for this assignment
+		double basketBill = basketService.calculateBaketCost();
 		double finalBill = basketBill - (basketBill * (customer.getAccountTYpe().getDiscount() / 100));
-		return finalBill;
-
+		basketService.printItemizedBill();
+		payAndEmptyBasker(finalBill);
 	}
 
-	// TODO: We can have payment mode as -- offline /online, but consdering
-	// thtat out of scope or this assignment
+	/**
+	 * Dummy method to pay bill, for elaborated application, we can have BIlling
+	 * service, which can take care of this **?
+	 * 
+	 */
+	private void payAndEmptyBasker(double finalBill) {
+		// billingService.pay(finalBill);
+		// reset basket
+		basketService.clearBasket();
+		
+	}
+
+	@Override
+	public boolean addToBasket(Item item) {
+		return basketService.addItem(item);
+	}
+
+	@Override
+	public boolean removeFromBasket(Item item) {
+		return basketService.removeItem(item);
+	}
+
+	@Override
+	public void clearBasket() {
+		basketService.clearBasket();
+	}
 
 }

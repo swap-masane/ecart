@@ -12,6 +12,7 @@ public class Item {
 	public Item(){
 		
 	}
+
 	/**
 	 * Parameterized constructor if we need to override price or discount of items
 	 * @param type
@@ -22,12 +23,6 @@ public class Item {
 		this.type = type;
 		// methods to override discount or price.
 		// If null is passed then do not overridee
-		if (discount != null) {
-			this.type.overrideDiscount(discount);
-		}
-		if (price != null) {
-			this.type.overridePrice(price);
-		}
 	}
 
 	public ItemType getType() {

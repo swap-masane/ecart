@@ -24,6 +24,21 @@
 			<version>4.11</version>
 			<scope>test</scope>
 		</dependency>
+
+		<dependency>
+			<groupId>org.mockito</groupId>
+			<artifactId>mockito-all</artifactId>
+			<version>1.9.5</version>
+			<scope>test</scope>
+		</dependency>
+		
+		<!-- https://mvnrepository.com/artifact/emma/emma -->
+		<dependency>
+			<groupId>emma</groupId>
+			<artifactId>emma</artifactId>
+			<version>2.1.5320</version>
+		</dependency>
+
 	</dependencies>
 
 	<reporting>
@@ -51,7 +66,9 @@
 			<plugin>
 				<groupId>org.codehaus.mojo</groupId>
 				<artifactId>cobertura-maven-plugin</artifactId>
-				<version>2.6</version>
+				<!-- <version>2.6</version> -->
+				<version>2.1.0-SNAPSHOT</version>
+
 				<configuration>
 					<formats>
 						<format>html</format>
@@ -59,6 +76,9 @@
 					</formats>
 				</configuration>
 			</plugin>
+
+			<!-- https://mvnrepository.com/artifact/org.mockito/mockito-all -->
+
 
 		</plugins>
 	</reporting>
