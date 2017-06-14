@@ -31,13 +31,13 @@ public class CustomerServiceImpl implements CustomerService {
 		double totalBill = getCustomerBillAfterDiscounts();
 		basketService.printItemizedBill();
 		// prints discounted bill.
-		//  System.out.println("Final bill after discount :" + totalBill);
+		// System.out.println("Final bill after discount :" + totalBill);
 		payAndEmptyBasker(totalBill);
 	}
 
-	
 	/**
 	 * Applies Customer discount and returns the final bill
+	 * 
 	 * @return
 	 */
 	public double getCustomerBillAfterDiscounts() {

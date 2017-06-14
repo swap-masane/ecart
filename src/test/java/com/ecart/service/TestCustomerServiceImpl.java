@@ -1,6 +1,5 @@
 package com.ecart.service;
 
-import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
@@ -59,9 +58,16 @@ public class TestCustomerServiceImpl {
 
 	@Test
 	public void TestGetCustomerBillAfterDiscounts() {
+		// initialize new apple
+		item = new Item();
+		item.setDescription("Apple");
+		item.setItemId(1);
+		item.setType(ItemType.APPLE);
+		// add two apples into basket
 		service.addToBasket(item);
 		service.addToBasket(item);
 		assertTrue(36.0 == service.getCustomerBillAfterDiscounts());
 	}
 
+	
 }

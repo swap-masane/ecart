@@ -2,10 +2,17 @@ package com.ecart.service;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
 
+import java.util.ArrayList;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+import org.mockito.Mockito;
+import org.powermock.reflect.Whitebox;
 
 import com.ecart.constant.ItemType;
 import com.ecart.model.Basket;
@@ -25,6 +32,7 @@ public class TestBasketService {
 		item.setItemId(1);
 		item.setType(ItemType.APPLE);
 		basket = new Basket();
+
 	}
 
 	@Test
@@ -126,6 +134,46 @@ public class TestBasketService {
 		}
 	}
 
+	@Test
+	public void testClearBasketMock() {
+		BasketService basketserice = mock(BasketServiceImpl.class);
+		basketserice.clearBasket();
+		verify(basketserice).clearBasket();
+	}
+
+	@Test
+	public void testPrintItemizedBill() {
+		Basket basket = new Basket();
+		BasketService basketserice = new BasketServiceImpl(basket);
+		BasketService basketsericeSpy = Mockito.spy(basketserice);
+		basketsericeSpy.printItemizedBill();
+		basketsericeSpy.printItemizedBill();
+		verify(basketsericeSpy, times(2)).printItemizedBill();
+
+	}
+
+	@Test
+	public void testPrintItemizedBill1() {
+		// Basket basket = new Basket();
+		// BasketService basketserice = new BasketServiceImpl(basket);
+		// BasketService basketsericeSpy = Mockito.spy(basketserice);
+		// basketsericeSpy.printItemizedBill();
+		// basketsericeSpy.printItemizedBill();
+		// verify(basketsericeSpy, times(2)).printItemizedBill();
+		Basket basket = new Basket();
+		BasketService basketserice = new BasketServiceImpl(basket);
+		String formatString = null;
+		try {
+			 formatString = Whitebox.invokeMethod(basketserice, "getFormatedString", 1, 20.0, ItemType.APPLE, new ArrayList<>());
+		} catch (Exception e) {
+			fail("Change is signature of methods, method innocation failed");
+		}
+		
+		assertTrue(formatString.contains("APPLE") );
+		assertTrue(formatString.contains("20.0") );
+		
+		
+	}
 	private void fillBasket(BasketService service) {
 		Item item = new Item();
 		item.setDescription("Apple");

@@ -108,7 +108,8 @@ public class BasketServiceImpl implements BasketService {
 			itemizedSum = entry.getValue().parallelStream().map(e -> e.getType().getDiscountedPrice()).reduce(0.0,
 					Double::sum);
 			totalBill = totalBill + itemizedSum;
-			System.out.println(getFormatedString(serialNumber, itemizedSum, entry));
+			
+			System.out.println(getFormatedString(serialNumber, itemizedSum, entry.getKey(), entry.getValue()));
 		}
 
 		System.out.println(line);
@@ -124,18 +125,18 @@ public class BasketServiceImpl implements BasketService {
 	 * @param entry
 	 * @return
 	 */
-	private String getFormatedString(int serialNumber, double itemizedSum, Map.Entry<ItemType, List<Item>> entry) {
+	private String getFormatedString(int serialNumber, double itemizedSum,ItemType type,  List<Item> itemList) {
 		StringBuffer buffer = new StringBuffer();
 		String tab = "\t";
 		buffer.append(" ");
 		buffer.append(serialNumber);
 		buffer.append(tab);
-		buffer.append(entry.getKey());
+		buffer.append(type);
 		buffer.append(tab);
-		buffer.append(entry.getKey().getDiscountedPrice());
+		buffer.append(type.getDiscountedPrice());
 		buffer.append(tab);
 		buffer.append(tab);
-		buffer.append(entry.getValue().size());
+		buffer.append(itemList.size());
 		buffer.append(tab);
 		buffer.append(itemizedSum);
 		buffer.append(tab);
